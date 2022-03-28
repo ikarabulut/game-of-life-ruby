@@ -1,7 +1,7 @@
 #frozen_string_literal: true
 
 class World
-  attr_reader :cells
+  attr_accessor :cells
 
   DEAD = "o"
   ALIVE = "x"
@@ -13,7 +13,7 @@ class World
     rows.times do |x|
       @cells.push([])
       columns.times do |y|
-        @cells[x].push(DEAD) #set everything to dead
+        @cells[x].push([DEAD, ALIVE].sample) #randomize dead & alive cells
       end
     end
   end
@@ -105,13 +105,12 @@ class World
   end
 
   def tick
-    @cells.each_with_index do |_, row|
-      @cells[row].each_with_index do |_, column|
-        cell = @cells[row][column]
+    @cells.each_with_index do |row, x|
+      @cells[row].each_with_index do |cell, y|
         if cell == DEAD
-          cell = ALIVE if revive_at?(row, column)
+          cell = ALIVE if revive_at?(x, y)
         else
-          cell = ALIVE if alive_next_generation?(row, column)
+          cell = ALIVE if alive_next_generation?(x, y)
         end
       end
     end

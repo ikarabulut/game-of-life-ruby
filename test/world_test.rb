@@ -4,10 +4,10 @@ require './lib/world.rb'
 class World_Test < MiniTest::Test
 
   def setup
-    @fertile_setup = [
-      ["o","x","o","o","o"],
-      ["o","x","x","o","o"],
-      ["o","x","o","o","o"],
+    @still_life = [
+      ["o","o","o","o","o"],
+      ["o","o","x","x","o"],
+      ["o","o","x","x","o"],
       ["o","o","o","o","o"],
       ["o","o","o","o","o"]
     ]
@@ -47,50 +47,42 @@ class World_Test < MiniTest::Test
 
   def test_an_alive_cell_will_be_dead_in_the_next_generation_if_underpopulated
     world = World.new(5,5)
-    world.cells[1][1] = "x"
-    status = world.alive_next_generation?(1,1)
+    world.cells = @still_life
+    world.cells[0][0] = "x"
+    status = world.alive_next_generation?(0, 0)
     assert(status == false)
   end
 
   def test_an_alive_cell_will_be_dead_in_the_next_generation_if_overpopulated
     world = World.new(5,5)
-    world.cells[1][1] = "x"
-    world.cells[1][0] = "x"
-    world.cells[1][2] = "x"
-    world.cells[2][0] = "x"
-    world.cells[2][1] = "x"
-    assert_equal(world.alive_next_generation?(1,1), false)
+    world.cells = @still_life
+    world.cells[3][2] = "x"
+    assert_equal(world.alive_next_generation?(2, 2), false)
   end
 
   def test_an_alive_cell_will_be_alive_in_the_next_generation_if_on_fertile_land
     world = World.new(5,5)
-    world.cells[1][1] = "x"
-    world.cells[1][0] = "x"
-    world.cells[1][2] = "x"
-    world.cells[2][0] = "x"
-    assert_equal(world.alive_next_generation?(1,1), true)
+    world.cells = @still_life
+    assert_equal(world.alive_next_generation?(1,2), true)
   end
 
   def test_a_dead_cell_will_be_alive_in_the_next_generation_from_revival
     world = World.new(5,5)
-    world.cells[1][0] = "x"
-    world.cells[1][2] = "x"
-    world.cells[2][0] = "x"
-    assert_equal(world.revive_at?(1,1), true)
+    world.cells = @still_life
+    world.cells[3][2] = "x"
+    assert_equal(world.revive_at?(3,3), true)
   end
 
   def test_a_dead_cell_will_stay_dead_in_the_next_generation_without_3_alive_neighbors
     world = World.new(5,5)
-    world.cells[1][0] = "x"
-    world.cells[2][0] = "x"
-    assert_equal(world.revive_at?(1,1), false)
+    world.cells = @still_life
+    assert_equal(world.revive_at?(0, 2), false)
   end
 
-  # def test_that_a_fertile_setup_will_return_the_same_world_after_a_tick
-  #   skip
-  #   world = World.new(5,5).cells
-  #   world = @fertile_setup
-  #   assert_equal(world.tick, @fertile_setup)
+  # def test_that_a_still_life_will_stay_still_after_a_tick
+  #   world = World.new(5, 5)
+  #   world.cells = @still_life
+  #   assert_equal(world.tick, @still_life)
   # end
 
   def test_neighbor_of_a_cell_on_the_right_edge_wraps_to_the_left
