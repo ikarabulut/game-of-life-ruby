@@ -19,16 +19,16 @@ class World
   end
 
 
-  def get_cell(x,y)
+  def get_cell(x, y)
     @cells[x][y]
   end
   
  
-  def set_alive_at(x,y)
+  def set_alive_at(x, y)
     @cells[x][y] = ALIVE
   end
 
-  def set_dead_at(x,y)
+  def set_dead_at(x, y)
     @cells[x][y] = DEAD
   end
 
@@ -76,9 +76,9 @@ class World
     neighbors.push(@cells[x - 1][y - 1]) # Top Left
   end
 
-  def alive_neighbors_of(x,y)
+  def alive_neighbors_of(x, y)
     alive_neighbors = []
-    neighbors_of(x,y).each do |neighbor|
+    neighbors_of(x, y).each do |neighbor|
       if neighbor == "x"
         alive_neighbors.push(neighbor)
       end
@@ -88,16 +88,16 @@ class World
 
   
   
-  def alive_next_generation?(x,y)
-    if alive_neighbors_of(x,y).length == 2 || alive_neighbors_of(x,y).length == 3
+  def alive_next_generation?(x, y)
+    if alive_neighbors_of(x, y).length == 2 || alive_neighbors_of(x, y).length == 3
       true
     else
       false
     end
   end
 
-  def revive_at?(x,y)
-    if alive_neighbors_of(x,y).length == 3
+  def revive_at?(x, y)
+    if alive_neighbors_of(x, y).length == 3
       true
     else
       false
