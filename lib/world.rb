@@ -104,18 +104,4 @@ class World
     end
   end
 
-  def tick
-    @cells.each_with_index do |row, x|
-      @cells[row].each_with_index do |cell, y|
-        if cell == DEAD
-          cell = ALIVE if revive_at?(x, y)
-        else
-          cell = ALIVE if alive_next_generation?(x, y)
-        end
-      end
-    end
-  end
-
-
-
 end

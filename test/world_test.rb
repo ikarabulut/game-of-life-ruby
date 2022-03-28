@@ -11,6 +11,13 @@ class World_Test < MiniTest::Test
       ["o","o","o","o","o"],
       ["o","o","o","o","o"]
     ]
+    @blinker = [
+      ["o","o","o","o","o"],
+      ["o","o","x","o","o"],
+      ["o","o","x","o","o"],
+      ["o","o","x","o","o"],
+      ["o","o","o","o","o"]
+    ]
   end
 
   def test_that_a_new_world_is_the_correct_size
@@ -78,12 +85,6 @@ class World_Test < MiniTest::Test
     world.cells = @still_life
     assert_equal(world.revive_at?(0, 2), false)
   end
-
-  # def test_that_a_still_life_will_stay_still_after_a_tick
-  #   world = World.new(5, 5)
-  #   world.cells = @still_life
-  #   assert_equal(world.tick, @still_life)
-  # end
 
   def test_neighbor_of_a_cell_on_the_right_edge_wraps_to_the_left
     world = World.new(5, 5)
