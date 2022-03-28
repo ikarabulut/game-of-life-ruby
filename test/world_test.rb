@@ -86,30 +86,30 @@ class World_Test < MiniTest::Test
     assert_equal(world.revive_at?(1,1), false)
   end
 
-  def test_that_a_fertile_setup_will_return_the_same_world_after_a_tick
-    skip
-    world = World.new(5,5).cells
-    world = @fertile_setup
-    assert_equal(world.tick, @fertile_setup)
-  end
+  # def test_that_a_fertile_setup_will_return_the_same_world_after_a_tick
+  #   skip
+  #   world = World.new(5,5).cells
+  #   world = @fertile_setup
+  #   assert_equal(world.tick, @fertile_setup)
+  # end
 
-  def test_neighor_of_cell_on_left_edge_is_the_cell_on_the_same_row_on_the_right_edge
+  def test_neighbor_of_a_cell_on_the_right_edge_wraps_to_the_left
     world = World.new(5, 5)
 
-    # refute_includes(world.neighbors_of(0, 4), nil)
-    assert_equal(world.neighbors_of(1, 0)[5], world.cells[1][4])
+    refute_includes(world.neighbors_of(0, 4), nil)
+    assert_equal(world.neighbors_of(0, 4)[1], world.cells[0][0])
   end
 
-  def test_neighbor_of_cell_on_the_right_edge_is_on_the_same_row_on_the_left_edge
+  def test_neighbor_of_cell_on_the_bottom_of_the_world_will_wrap_to_the_top
     world = World.new(5, 5)
 
-    # refute_includes(world.neighbors_of(0, 4), nil)
-    assert_equal(world.neighbors_of(1, 4)[5], world.cells[1][0])
+    refute_includes(world.neighbors_of(0, 4), nil)
+    assert_equal(world.neighbors_of(4, 1)[2], world.cells[0][1])
   end
 
-  def test_neighbor_of_cell_on_the_bottom_edge_is_on_the_same_column_on_the_top_edge
+  def test_neighbor_of_cell_on_the_bottom_right_edge_will_wrap_to_the_top_right_edge
     world = World.new(5, 5)
-    assert_equal(world.neighbors_of(4, 0)[0], world.cells[0][0])
+    refute_includes(world.neighbors_of(4, 4), nil)
   end
 
 end
