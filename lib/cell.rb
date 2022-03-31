@@ -1,5 +1,4 @@
 require_relative './world.rb'
-require 'world'
 
 class Cell
   attr_reader :x, :y
@@ -9,6 +8,10 @@ class Cell
     @x = x
     @y = y
     @status = status
+  end
+
+  def to_s
+    @status == "alive" ? 1 : 0
   end
 
 end
