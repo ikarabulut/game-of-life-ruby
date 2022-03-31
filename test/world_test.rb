@@ -33,20 +33,13 @@ class World_Test < MiniTest::Test
     refute(world.empty?)
   end
 
-
-  # def test_that_you_can_make_an_alive_cell_dead
-  #   world = World.new(5, 5)
-  #   world.cells[1][1] = "x"
-  #   world.set_dead_at(1, 1)
-  #   assert_equal(world.cells[1][1], "o")
-  # end
-
-  # def test_a_cell_has_8_neighbors
-  #   world = World.new(5, 5)
-  #   neighbors = world.neighbors_of(1, 1)
-  #   assert_equal(neighbors.length, 8)
-  #   refute_includes(world.neighbors_of(1, 1), nil)
-  # end
+  def test_a_cell_has_8_neighbors
+    world = World.new(5, 5)
+    world.generate_dead_board
+    neighbors = world.neighbors_of(1, 1)
+    assert_equal(neighbors.length, 8)
+    refute_includes(neighbors, nil)
+  end
 
   # def test_an_alive_cell_will_be_dead_in_the_next_generation_if_underpopulated
   #   world = World.new(5, 5)
