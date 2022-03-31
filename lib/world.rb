@@ -22,6 +22,10 @@ class World
     end
   end
 
+  def set_alive_at(x, y)
+    cells[x][y] = Cell.new(x, y, "alive")
+  end
+
   # def neighbors_of(x, y)
   #   neighbors = []
   #   neighbors.push(@cells[x][y - 1]) # Left

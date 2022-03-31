@@ -9,7 +9,7 @@ class World_Test < MiniTest::Test
     assert_equal(world.cells.flatten.length, (5 * 5))
   end
 
-  def test_that_an_initially_generated_world_is_empty
+  def test_that_an_initially_generated_world_is_all_dead_cells
     world = World.new(5, 5)
     assert(world.empty?)
   end
@@ -20,6 +20,19 @@ class World_Test < MiniTest::Test
     world.generate_random_cells
     refute_includes(world.cells, nil)
   end
+
+  def test_that_you_can_set_a_cell_to_alive
+    world = World.new(5, 5)
+    mock_cell = world.set_alive_at(1, 1)
+    assert_equal(mock_cell.status, "alive")
+  end
+
+  def test_that_a_world_is_no_longer_empty_after_adding_an_alive_cell
+    world = World.new(5, 5)
+    world.set_alive_at(1, 1)
+    refute(world.empty?)
+  end
+
 
   # def test_that_you_can_make_an_alive_cell_dead
   #   world = World.new(5, 5)
