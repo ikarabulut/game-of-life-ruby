@@ -11,7 +11,7 @@ class World_Test < MiniTest::Test
 
   def test_that_an_initially_generated_world_is_all_dead_cells
     world = World.new(5, 5)
-    assert(world.empty?)
+    assert_empty(world)
   end
 
   
@@ -40,6 +40,12 @@ class World_Test < MiniTest::Test
     assert_equal(neighbors.length, 8)
     refute_includes(neighbors, nil)
   end
+
+  # def test_alive_neighbors_of_will_only_return_alive_neighbors
+  #   world = World.new(5, 5)
+  #   world.generate_random_board
+  #   alive_neighbors = world.alive_neighbors_of(1, 1)
+
 
   # def test_an_alive_cell_will_be_dead_in_the_next_generation_if_underpopulated
   #   world = World.new(5, 5)

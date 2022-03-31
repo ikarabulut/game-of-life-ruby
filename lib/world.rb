@@ -10,10 +10,6 @@ class World
     @cells = Array.new(rows) { Array.new(columns) }
   end
 
-  def empty?
-    cells.flatten.length == cells.flatten.count(nil)
-  end
-
   def generate_dead_board
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
