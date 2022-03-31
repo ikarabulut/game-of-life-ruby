@@ -1,54 +1,41 @@
 #frozen_string_literal: true
+require_relative './cell.rb'
 
 class World
   attr_accessor :cells
 
-  DEAD = "o"
-  ALIVE = "x"
-
-  def initialize(columns, rows) #Columns is Y, Rows is X
-    @cells = []
-    @columns = columns
+  def initialize(rows, columns)
     @rows = rows
-    rows.times do |x|
-      @cells.push([])
-      columns.times do |y|
-        @cells[x].push([DEAD, ALIVE].sample) #randomize dead & alive cells
+    @columns = columns
+    @cells = Array.new(rows) { Array.new(columns) }
+    generate_cells
+  end
+  
+  def generate_cells
+    @cells = @cells.each_with_index.map do |row, x|
+      @cells[x].each_with_index.map do |cell, y|
+        cell = Cell.new(x, y, ["alive", "dead"].sample)
       end
     end
   end
 
-
   def get_cell(x, y)
     @cells[x][y]
-  end
-  
- 
-  def set_alive_at(x, y)
-    @cells[x][y] = ALIVE
-  end
-
-  def set_dead_at(x, y)
-    @cells[x][y] = DEAD
   end
 
   def neighbors_of(x, y)
     neighbors = []
-
     neighbors.push(@cells[x][y - 1]) # Left
-
     if y == @columns - 1
       neighbors.push(@cells[x][0]) # Wrap from right to left
     else
       neighbors.push(@cells[x][y + 1]) # Right
     end
-
     if x == @rows - 1
       neighbors.push(@cells[0][y]) # Wrap from bottom to top
     else
       neighbors.push(@cells[x + 1][y]) # Bottom
     end
-    
     if y == @columns - 1 && x == @rows - 1
       neighbors.push(@cells[0][0]) # Wrap from bottom right to top right if cell == bottom right corner
     elsif y == @columns - 1
@@ -58,28 +45,25 @@ class World
     else  
       neighbors.push(@cells[x + 1][y + 1]) # Bottom Right
     end
-
     if x == @rows - 1
       neighbors.push(@cells[0][y - 1]) # Wrap from bottom to top
     else
       neighbors.push(@cells[x + 1][y - 1]) # Bottom left
     end
-
     neighbors.push(@cells[x - 1][y]) # Top
-
     if y == @columns - 1
       neighbors.push(@cells[x - 1][0]) # Wrap from right to left
     else
       neighbors.push(@cells[x - 1][y + 1]) # Top Right
     end
-
     neighbors.push(@cells[x - 1][y - 1]) # Top Left
+    return neighbors
   end
 
   def alive_neighbors_of(x, y)
     alive_neighbors = []
     neighbors_of(x, y).each do |neighbor|
-      if neighbor == "x"
+      if neighbor.status == "alive"
         alive_neighbors.push(neighbor)
       end
     end
@@ -104,4 +88,29 @@ class World
     end
   end
 
+  def start_evolutions
+    puts "To end the program please hit ctrl + c"
+    while true
+      tick
+      sleep(0.5) 
+    end
+  end
+
+  def tick
+    next_generation = @cells.each_with_index.map do |row, x| 
+      @cells[x].each_with_index.map do |cell, y|
+        if alive_next_generation?(x, y)
+          cell.status = "alive"
+        else
+          cell.status = "dead"
+        end
+        cell
+      end
+    end
+    return next_generation
+  end
+
+
+
 end
+
