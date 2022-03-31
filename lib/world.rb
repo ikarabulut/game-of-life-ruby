@@ -11,7 +11,7 @@ class World
   end
 
   def empty?
-    cells.include?(nil)
+    cells.flatten.length == cells.flatten.count(nil)
   end
   
   def generate_random_cells

@@ -9,17 +9,17 @@ class World_Test < MiniTest::Test
     assert_equal(world.cells.flatten.length, (5 * 5))
   end
 
-  def test_that_an_initially_generated_world_is_full_of_dead_cells
+  def test_that_an_initially_generated_world_is_empty
     world = World.new(5, 5)
     assert(world.empty?)
   end
 
   
-  # def test_that_you_can_make_a_dead_cell_alive
-  #   world = World.new(5, 5)
-  #   world.set_alive_at(1, 1)
-  #   assert_equal(world.cells[1][1], "x")
-  # end
+  def test_that_you_can_generate_a_random_board_state
+    world = World.new(5, 5)
+    world.generate_random_cells
+    refute_includes(world.cells, nil)
+  end
 
   # def test_that_you_can_make_an_alive_cell_dead
   #   world = World.new(5, 5)
