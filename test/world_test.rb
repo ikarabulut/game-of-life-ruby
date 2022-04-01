@@ -6,7 +6,7 @@ class World_Test < MiniTest::Test
 
   def test_that_a_new_world_is_the_correct_size
     world = World.new(5, 5)
-    assert_equal(world.cells.flatten.length, (5 * 5))
+    assert_equal(25, world.cells.flatten.length)
   end
 
   def test_that_an_initially_generated_world_is_all_dead_cells
@@ -31,14 +31,14 @@ class World_Test < MiniTest::Test
   def test_that_you_can_set_a_cell_to_alive
     world = World.new(5, 5)
     mock_cell = world.set_alive_at(1, 1)
-    assert_equal(mock_cell.status, "alive")
+    assert_equal("alive", mock_cell.status)
   end
 
   def test_that_a_dead_cell_on_a_fully_dead_board_is_set_to_alive_with_set_alive_at
     world = World.new(5, 5)
     world.generate_dead_board
     world.set_alive_at(1, 1)
-    assert_equal(world.cells[1][1].status, "alive")
+    assert_equal("alive", world.cells[1][1].status)
   end
 
   def test_a_cell_has_8_neighbors
@@ -55,7 +55,7 @@ class World_Test < MiniTest::Test
     alive_neighbors = world.alive_neighbors_of(1, 1)
     alive_neighbors.each do |neighbor|
       status = neighbor.status
-      assert_equal(status, "alive")
+      assert_equal("alive", status)
     end
   end
 
