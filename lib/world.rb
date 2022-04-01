@@ -76,16 +76,14 @@ class World
     end
     return alive_neighbors
   end
-
   
-  
-  # def alive_next_generation?(x, y)
-  #   if alive_neighbors_of(x, y).length == 2 || alive_neighbors_of(x, y).length == 3
-  #     true
-  #   else
-  #     false
-  #   end
-  # end
+  def alive_next_generation?(x, y)
+    if alive_neighbors_of(x, y).length == 2 || alive_neighbors_of(x, y).length == 3
+      true
+    else
+      false
+    end
+  end
 
   # def revive_at?(x, y)
   #   if alive_neighbors_of(x, y).length == 3
