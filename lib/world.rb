@@ -85,13 +85,13 @@ class World
     end
   end
 
-  # def revive_at?(x, y)
-  #   if alive_neighbors_of(x, y).length == 3
-  #     true
-  #   else
-  #     false
-  #   end
-  # end
+  def revive_at?(x, y)
+    if alive_neighbors_of(x, y).length == 3
+      true
+    else
+      false
+    end
+  end
 
   # def start_evolutions
   #   puts "To end the program please hit ctrl + c"

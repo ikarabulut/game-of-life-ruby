@@ -88,12 +88,14 @@ class World_Test < MiniTest::Test
     assert_equal(true, world.alive_next_generation?(1, 2))
   end
 
-  # def test_a_dead_cell_will_be_alive_in_the_next_generation_from_revival
-  #   world = World.new(5, 5)
-  #   world.cells = @still_life
-  #   world.cells[3][2] = "x"
-  #   assert_equal(world.revive_at?(3, 3), true)
-  # end
+  def test_a_dead_cell_will_be_alive_in_the_next_generation_from_revival
+    world = World.new(5, 5)
+    world.generate_dead_board
+    world.cells[1][3].status = "alive"
+    world.cells[1][1].status = "alive"
+    world.cells[2][2].status = "alive"
+    assert_equal(true, world.revive_at?(1, 2))
+  end
 
   # def test_a_dead_cell_will_stay_dead_in_the_next_generation_without_3_alive_neighbors
   #   world = World.new(5, 5)
