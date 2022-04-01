@@ -11,7 +11,7 @@ class Cell
   end
 
   def alive?
-   status == 1
+   @status == 1
   end
 
   def revive

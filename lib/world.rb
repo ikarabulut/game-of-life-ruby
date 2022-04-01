@@ -76,11 +76,17 @@ class World
 
   def alive_neighbors_of(x, y)
     alive_neighbors = []
-    neighbors_of(x, y).each do |neighbor|
+    neighbors = neighbors_of(x, y)
+    # puts "DEBUG:: #{neighbors} is the array of neighbors"
+    
+    neighbors.each do |neighbor|
+      # puts "DEBUG:: This is #{neighbor.alive?}"
       if neighbor.alive?
+
         alive_neighbors.push(neighbor)
       end
     end
+    # puts "DEBUG:: #{alive_neighbors.length} is the length of alive neighbors"
     return alive_neighbors
   end
   
@@ -108,18 +114,16 @@ class World
   #   end
   # end
 
-
+  
   def tick
-   @cells = @cells.each_with_index.map do |row, x| 
-      @cells[x].each_with_index.map do |cell, y|
-        if alive_next_generation?(x, y)
-          cell.status = "alive"
-        else
-          cell.status = "dead"
-        end
-        cell
+    @cell_objects.each do |cell|
+      if cell.status == 0
+        cell.status = (revive_at?(cell.x, cell.y)) ? 1 : 0
+      elsif cell.status == 1
+        cell.status = (alive_next_generation?(cell.x, cell.y)) ? 1 : 0
       end
     end
+    return @cell_objects
   end
 
   def display_board
