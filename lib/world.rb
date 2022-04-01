@@ -15,7 +15,6 @@ class World
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y)
-        cell_objects.push(cell)
       end
     end
   end
@@ -26,7 +25,6 @@ class World
         cell = Cell.new(x, y)
         cell.status = [0, 1].sample
         cell
-        cell_objects.push(cell)
       end
     end
   end
