@@ -67,12 +67,16 @@ class World_Test < MiniTest::Test
     assert_equal(false, world.alive_next_generation?(0, 0))
   end
 
-  # def test_an_alive_cell_will_be_dead_in_the_next_generation_if_overpopulated
-  #   world = World.new(5, 5)
-  #   world.cells = @still_life
-  #   world.cells[3][2] = "x"
-  #   assert_equal(world.alive_next_generation?(2, 2), false)
-  # end
+  def test_an_alive_cell_will_be_dead_in_the_next_generation_if_overpopulated
+    world = World.new(5, 5)
+    world.generate_dead_board
+    world.cells[1][3].status = "alive"
+    world.cells[1][1].status = "alive"
+    world.cells[1][2].status = "alive"
+    world.cells[0][2].status = "alive"
+    world.cells[2][2].status = "alive"
+    refute(world.alive_next_generation?(1, 2))
+  end
 
   # def test_an_alive_cell_will_be_alive_in_the_next_generation_if_on_fertile_land
   #   world = World.new(5, 5)
