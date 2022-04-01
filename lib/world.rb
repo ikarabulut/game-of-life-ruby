@@ -17,6 +17,8 @@ class World
         cell = Cell.new(x, y)
       end
     end
+
+    @cell_objects = @cells.flatten
   end
   
   def generate_random_board
@@ -27,6 +29,8 @@ class World
         cell
       end
     end
+
+    @cell_objects = @cells.flatten
   end
 
   def set_alive_at(x, y)
