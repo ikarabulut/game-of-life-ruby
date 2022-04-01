@@ -13,7 +13,7 @@ class World
   def generate_dead_board
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
-        cell = Cell.new(x, y, "dead")
+        cell = Cell.new(x, y)
       end
     end
   end
@@ -21,13 +21,15 @@ class World
   def generate_random_board
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
-        cell = Cell.new(x, y, ["alive", "dead"].sample)
+        cell = Cell.new(x, y)
+        cell.status = [0, 1].sample
+        cell
       end
     end
   end
 
   def set_alive_at(x, y)
-    cells[x][y] = Cell.new(x, y, "alive")
+    @cells[x][y].revive
   end
 
   def neighbors_of(x, y)
@@ -70,7 +72,7 @@ class World
   def alive_neighbors_of(x, y)
     alive_neighbors = []
     neighbors_of(x, y).each do |neighbor|
-      if neighbor.status == "alive"
+      if neighbor.alive?
         alive_neighbors.push(neighbor)
       end
     end
@@ -101,19 +103,7 @@ class World
   #   end
   # end
 
-  # def tick
-  #   next_generation = @cells.each_with_index.map do |row, x| 
-  #     @cells[x].each_with_index.map do |cell, y|
-  #       if alive_next_generation?(x, y)
-  #         cell.status = "alive"
-  #       else
-  #         cell.status = "dead"
-  #       end
-  #       cell
-  #     end
-  #   end
-  #   return next_generation
-  # end
+
 
 
 

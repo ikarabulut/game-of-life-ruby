@@ -4,12 +4,20 @@ require './lib/cell.rb'
 
 class World_Test < MiniTest::Test
 
+  def setup
+    @mock_blinker_world = World.new(5, 5)
+    @mock_blinker_world.generate_dead_board
+    @mock_blinker_world.cells[2][1].revive
+    @mock_blinker_world.cells[2][2].revive
+    @mock_blinker_world.cells[2][3].revive
+  end
+
   def test_that_a_new_world_is_the_correct_size
     world = World.new(5, 5)
     assert_equal(25, world.cells.flatten.length)
   end
 
-  def test_that_an_initially_generated_world_is_all_dead_cells
+  def test_that_an_initially_generated_world_is_all_dead_cells #TODO: update to nil
     world = World.new(5, 5)
     world.cells.each do |row|
       row.each do |cell|
@@ -30,15 +38,16 @@ class World_Test < MiniTest::Test
 
   def test_that_you_can_set_a_cell_to_alive
     world = World.new(5, 5)
-    mock_cell = world.set_alive_at(1, 1)
-    assert_equal("alive", mock_cell.status)
+    world.generate_dead_board
+    world.set_alive_at(1, 1)
+    assert_equal(true, world.cells[1][1].alive?)
   end
 
   def test_that_a_dead_cell_on_a_fully_dead_board_is_set_to_alive_with_set_alive_at
     world = World.new(5, 5)
     world.generate_dead_board
     world.set_alive_at(1, 1)
-    assert_equal("alive", world.cells[1][1].status)
+    assert_equal(true, world.cells[1][1].alive?)
   end
 
   def test_a_cell_has_8_neighbors
@@ -49,13 +58,33 @@ class World_Test < MiniTest::Test
     refute_includes(neighbors, nil)
   end
 
-  def test_alive_neighbors_of_will_only_return_alive_neighbors
+  def test_neighbor_to_the_right_of_a_cell_on_the_right_edge_wraps_to_the_left
+    world = World.new(5, 5)
+    world.generate_random_board
+    refute_includes(world.neighbors_of(0, 4), nil)
+    assert_equal(world.cells[0][0], world.neighbors_of(0, 4)[1])
+  end
+
+  def test_neighbor_to_the_bottomof_cell_on_the_bottom_of_the_world_will_wrap_to_the_top # TODO: FIX TYPO
+    world = World.new(5, 5)
+    world.generate_random_board
+    refute_includes(world.neighbors_of(0, 4), nil)
+    assert_equal(world.cells[0][1], world.neighbors_of(4, 1)[2])
+  end
+
+  def test_neighbor_to_the_bottom_right_of_cell_on_the_bottom_right_edge_will_wrap_to_the_top_left_edge
+    world = World.new(5, 5)
+    world.generate_random_board
+    refute_includes(world.neighbors_of(4, 4), nil)
+    assert_equal(world.cells[0][0], world.neighbors_of(4, 4)[3])
+  end
+
+  def test_alive_neighbors_of_will_only_return_alive_neighbors #TODO: FIX TYPO
     world = World.new(5, 5)
     world.generate_random_board
     alive_neighbors = world.alive_neighbors_of(1, 1)
     alive_neighbors.each do |neighbor|
-      status = neighbor.status
-      assert_equal("alive", status)
+      assert_equal(true, neighbor.alive?)
     end
   end
 
@@ -63,65 +92,55 @@ class World_Test < MiniTest::Test
   def test_an_alive_cell_will_be_dead_in_the_next_generation_if_underpopulated
     world = World.new(5, 5)
     world.generate_dead_board
-    world.cells[0][0].status = "alive"
+    world.cells[0][0].revive
     assert_equal(false, world.alive_next_generation?(0, 0))
   end
 
   def test_an_alive_cell_will_be_dead_in_the_next_generation_if_overpopulated
     world = World.new(5, 5)
     world.generate_dead_board
-    world.cells[1][3].status = "alive"
-    world.cells[1][1].status = "alive"
-    world.cells[1][2].status = "alive"
-    world.cells[0][2].status = "alive"
-    world.cells[2][2].status = "alive"
+    world.cells[1][3].revive
+    world.cells[1][1].revive
+    world.cells[1][2].revive
+    world.cells[0][2].revive
+    world.cells[2][2].revive
     refute(world.alive_next_generation?(1, 2))
   end
 
   def test_an_alive_cell_will_be_alive_in_the_next_generation_if_on_fertile_land
     world = World.new(5, 5)
     world.generate_dead_board
-    world.cells[1][3].status = "alive"
-    world.cells[1][2].status = "alive"
-    world.cells[1][1].status = "alive"
-    world.cells[2][2].status = "alive"
+    world.cells[1][3].revive
+    world.cells[1][2].revive
+    world.cells[1][1].revive
+    world.cells[2][2].revive
     assert_equal(true, world.alive_next_generation?(1, 2))
   end
 
   def test_a_dead_cell_will_be_alive_in_the_next_generation_from_revival
     world = World.new(5, 5)
     world.generate_dead_board
-    world.cells[1][3].status = "alive"
-    world.cells[1][1].status = "alive"
-    world.cells[2][2].status = "alive"
+    world.cells[1][3].revive
+    world.cells[1][1].revive
+    world.cells[2][2].revive
     assert_equal(true, world.revive_at?(1, 2))
   end
 
   def test_a_dead_cell_will_stay_dead_in_the_next_generation_without_3_alive_neighbors
     world = World.new(5, 5)
     world.generate_dead_board
-    world.cells[1][3].status = "alive"
-    world.cells[1][1].status = "alive"
+    world.cells[1][3].revive
+    world.cells[1][1].revive
     assert_equal(false, world.revive_at?(1, 2))
   end
 
-  # def test_neighbor_of_a_cell_on_the_right_edge_wraps_to_the_left
+  # def test_a_new_world_following_the_rules_will_generate_when_a_tick_is_initiated
   #   world = World.new(5, 5)
-
-  #   refute_includes(world.neighbors_of(0, 4), nil)
-  #   assert_equal(world.neighbors_of(0, 4)[1], world.cells[0][0])
-  # end
-
-  # def test_neighbor_of_cell_on_the_bottom_of_the_world_will_wrap_to_the_top
-  #   world = World.new(5, 5)
-
-  #   refute_includes(world.neighbors_of(0, 4), nil)
-  #   assert_equal(world.neighbors_of(4, 1)[2], world.cells[0][1])
-  # end
-
-  # def test_neighbor_of_cell_on_the_bottom_right_edge_will_wrap_to_the_top_right_edge
-  #   world = World.new(5, 5)
-  #   refute_includes(world.neighbors_of(4, 4), nil)
+  #   world.generate_dead_board
+  #   world.cells[1][2].status = "alive"
+  #   world.cells[2][2].status = "alive"
+  #   world.cells[3][2].status = "alive"
+  #   assert_equal(@mock_blinker_world.cells, world.tick)
   # end
 
 end

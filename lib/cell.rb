@@ -4,14 +4,26 @@ class Cell
   attr_reader :x, :y
   attr_accessor :status
 
-  def initialize(x, y, status)
+  def initialize(x, y)
     @x = x
     @y = y
-    @status = status
+    @status = 0
   end
 
-  def to_s
-    @status == "alive" ? 1 : 0
+  def alive?
+   status == 1
   end
+
+  def revive
+    @status = 1
+  end
+
+  def kill
+    @status = 0
+  end
+
+  # def to_s
+  #   @alive? == "alive" ? 1 : 0
+  # end
 
 end
