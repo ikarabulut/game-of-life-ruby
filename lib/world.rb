@@ -2,18 +2,20 @@
 require_relative './cell.rb'
 
 class World
-  attr_accessor :cells
+  attr_accessor :cells, :cell_objects
 
   def initialize(rows, columns)
     @rows = rows
     @columns = columns
     @cells = Array.new(rows) { Array.new(columns) }
+    @cell_objects = []
   end
 
   def generate_dead_board
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y)
+        cell_objects.push(cell)
       end
     end
   end
@@ -24,6 +26,7 @@ class World
         cell = Cell.new(x, y)
         cell.status = [0, 1].sample
         cell
+        cell_objects.push(cell)
       end
     end
   end
@@ -104,18 +107,18 @@ class World
   # end
 
 
-  # def tick
-  #  @cells = @cells.each_with_index.map do |row, x| 
-  #     @cells[x].each_with_index.map do |cell, y|
-  #       if alive_next_generation?(x, y)
-  #         cell.status = "alive"
-  #       else
-  #         cell.status = "dead"
-  #       end
-  #       cell
-  #     end
-  #   end
-  # end
+  def tick
+   @cells = @cells.each_with_index.map do |row, x| 
+      @cells[x].each_with_index.map do |cell, y|
+        if alive_next_generation?(x, y)
+          cell.status = "alive"
+        else
+          cell.status = "dead"
+        end
+        cell
+      end
+    end
+  end
 
   def display_board
     board = @cells.each_with_index.map do |row, x| 
