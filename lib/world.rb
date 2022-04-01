@@ -18,7 +18,7 @@ class World
     end
   end
   
-  def generate_random_cells
+  def generate_random_board
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y, ["alive", "dead"].sample)
@@ -67,15 +67,15 @@ class World
     return neighbors
   end
 
-  # def alive_neighbors_of(x, y)
-  #   alive_neighbors = []
-  #   neighbors_of(x, y).each do |neighbor|
-  #     if neighbor.status == "alive"
-  #       alive_neighbors.push(neighbor)
-  #     end
-  #   end
-  #   return alive_neighbors
-  # end
+  def alive_neighbors_of(x, y)
+    alive_neighbors = []
+    neighbors_of(x, y).each do |neighbor|
+      if neighbor.status == "alive"
+        alive_neighbors.push(neighbor)
+      end
+    end
+    return alive_neighbors
+  end
 
   
   

@@ -11,14 +11,21 @@ class World_Test < MiniTest::Test
 
   def test_that_an_initially_generated_world_is_all_dead_cells
     world = World.new(5, 5)
-    assert_empty(world)
+    world.cells.each do |row|
+      row.each do |cell|
+        assert_nil(cell)
+      end
+    end
   end
 
-  
   def test_that_you_can_generate_a_random_board_state
     world = World.new(5, 5)
-    world.generate_random_cells
-    refute_includes(world.cells, nil)
+    world.generate_random_board
+    world.cells.each do |row|
+      row.each do |cell|
+        refute_nil(cell)
+      end
+    end
   end
 
   def test_that_you_can_set_a_cell_to_alive
@@ -27,10 +34,11 @@ class World_Test < MiniTest::Test
     assert_equal(mock_cell.status, "alive")
   end
 
-  def test_that_a_world_is_no_longer_empty_after_adding_an_alive_cell
+  def test_that_a_dead_cell_on_a_fully_dead_board_is_set_to_alive_with_set_alive_at
     world = World.new(5, 5)
+    world.generate_dead_board
     world.set_alive_at(1, 1)
-    refute(world.empty?)
+    assert_equal(world.cells[1][1].status, "alive")
   end
 
   def test_a_cell_has_8_neighbors
@@ -41,10 +49,15 @@ class World_Test < MiniTest::Test
     refute_includes(neighbors, nil)
   end
 
-  # def test_alive_neighbors_of_will_only_return_alive_neighbors
-  #   world = World.new(5, 5)
-  #   world.generate_random_board
-  #   alive_neighbors = world.alive_neighbors_of(1, 1)
+  def test_alive_neighbors_of_will_only_return_alive_neighbors
+    world = World.new(5, 5)
+    world.generate_random_board
+    alive_neighbors = world.alive_neighbors_of(1, 1)
+    alive_neighbors.each do |neighbor|
+      status = neighbor.status
+      assert_equal(status, "alive")
+    end
+  end
 
 
   # def test_an_alive_cell_will_be_dead_in_the_next_generation_if_underpopulated
