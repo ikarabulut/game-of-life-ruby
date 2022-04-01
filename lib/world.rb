@@ -104,7 +104,26 @@ class World
   # end
 
 
+  # def tick
+  #  @cells = @cells.each_with_index.map do |row, x| 
+  #     @cells[x].each_with_index.map do |cell, y|
+  #       if alive_next_generation?(x, y)
+  #         cell.status = "alive"
+  #       else
+  #         cell.status = "dead"
+  #       end
+  #       cell
+  #     end
+  #   end
+  # end
 
+  def display_board
+    board = @cells.each_with_index.map do |row, x| 
+      @cells[x].each_with_index.map do |cell, y|
+        cell.to_s
+      end
+    end
+  end
 
 
 end

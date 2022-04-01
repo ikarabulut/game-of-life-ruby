@@ -22,8 +22,8 @@ class Cell
     @status = 0
   end
 
-  # def to_s
-  #   @alive? == "alive" ? 1 : 0
-  # end
+  def to_s
+    @status
+  end
 
 end

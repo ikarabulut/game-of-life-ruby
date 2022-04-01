@@ -134,13 +134,27 @@ class World_Test < MiniTest::Test
     assert_equal(false, world.revive_at?(1, 2))
   end
 
+  def test_a_board_can_be_displayed_with_the_cells_1_or_0_status
+    world = World.new(5, 5)
+    world.generate_random_board
+    new_board = world.display_board.flatten
+    new_board.each do |status|
+      if status == 0 || status == 1
+        assert(true)
+      else
+        assert_equal(true, false, "#display_board did not return all 1's or 0's")
+      end
+    end
+  end
+
   # def test_a_new_world_following_the_rules_will_generate_when_a_tick_is_initiated
   #   world = World.new(5, 5)
   #   world.generate_dead_board
-  #   world.cells[1][2].status = "alive"
-  #   world.cells[2][2].status = "alive"
-  #   world.cells[3][2].status = "alive"
-  #   assert_equal(@mock_blinker_world.cells, world.tick)
+  #   world.cells[1][2].revive
+  #   world.cells[2][2].revive
+  #   world.cells[3][2].revive
+  #   world.tick
+  #   assert_equal(@mock_blinker_world.cells, world.cells)
   # end
 
 end
