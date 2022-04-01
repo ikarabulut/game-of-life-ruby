@@ -17,7 +17,7 @@ class World_Test < MiniTest::Test
     assert_equal(25, world.cells.flatten.length)
   end
 
-  def test_that_an_initially_generated_world_is_all_dead_cells #TODO: update to nil
+  def test_that_an_initially_generated_world_is_all_nil
     world = World.new(5, 5)
     world.cells.each do |row|
       row.each do |cell|
@@ -65,7 +65,7 @@ class World_Test < MiniTest::Test
     assert_equal(world.cells[0][0], world.neighbors_of(0, 4)[1])
   end
 
-  def test_neighbor_to_the_bottomof_cell_on_the_bottom_of_the_world_will_wrap_to_the_top # TODO: FIX TYPO
+  def test_neighbor_to_the_bottom_of_cell_on_the_bottom_of_the_world_will_wrap_to_the_top
     world = World.new(5, 5)
     world.generate_random_board
     refute_includes(world.neighbors_of(0, 4), nil)
@@ -79,7 +79,7 @@ class World_Test < MiniTest::Test
     assert_equal(world.cells[0][0], world.neighbors_of(4, 4)[3])
   end
 
-  def test_alive_neighbors_of_will_only_return_alive_neighbors #TODO: FIX TYPO
+  def test_alive_neighbors_of_will_only_return_alive_neighbors
     world = World.new(5, 5)
     world.generate_random_board
     alive_neighbors = world.alive_neighbors_of(1, 1)
