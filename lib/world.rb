@@ -111,6 +111,7 @@ class World
   def begin_evolutions
     generation_number = 0
     15.times do
+      system "clear"
       puts "Generation #{generation_number += 1}"
       tick
       pp display_board
