@@ -8,7 +8,10 @@ class World
     @rows = rows
     @columns = columns
     @cells = Array.new(rows) { Array.new(columns) }
-    @cell_objects = []
+  end
+
+  def cell_objects
+    @cells.flatten
   end
 
   def generate_dead_board
@@ -17,8 +20,6 @@ class World
         cell = Cell.new(x, y)
       end
     end
-
-    @cell_objects = @cells.flatten
   end
   
   def generate_random_board
@@ -29,8 +30,6 @@ class World
         cell
       end
     end
-
-    @cell_objects = @cells.flatten
   end
 
   def set_alive_at(x, y)
@@ -87,12 +86,10 @@ class World
     neighbors = neighbors_of(x, y)
 
     neighbors.each do |neighbor|
-      # puts "DEBUG:: This is #{neighbor.alive?}"
       if neighbor.alive?
         alive_neighbors.push(neighbor)
       end
     end
-    # puts "DEBUG:: #{alive_neighbors.length} is the length of alive neighbors"
     return alive_neighbors
   end
   
@@ -112,18 +109,8 @@ class World
     end
   end
 
-  # def start_evolutions
-  #   puts "To end the program please hit ctrl + c"
-  #   while true
-  #     tick
-  #     sleep(0.5) 
-  #   end
-  # end
-
-  
   def tick
-
-    old_world = @cell_objects
+    old_world = cell_objects
     new_world = Array.new(@rows) { Array.new(@columns) }
     old_world.each do |cell|
       new_cell = Cell.new(cell.x, cell.y)
@@ -144,40 +131,6 @@ class World
     end
     @cells = new_world
   end
-
-
-
-
-  #   old_world = @cells.copy
-  #   new_world = Array.new(@rows) { Array.new(@columns) }
-  #   rows.times do |x|
-  #     columns.times do |y|
-  #       cell = old_world[x][y]
-  #       if cell.status == 0 # dead
-  #         if revive_at?(cell.x, cell.y)
-  #           new_cell = Cell.new(cell.x, cell.y)
-  #           new_cell.status = 1
-  #           new_world[x][y] = new_cell
-  #       end
-
-  #       if cell.status == 1 # alive
-  #       end
-  #     end
-  #   end
-
-  #   @cells = new_world
-
-  #   next_world = @cell_objects.map do |cell|
-  #     if cell.status == 0
-  #       cell.status = (revive_at?(cell.x, cell.y)) ? 1 : 0
-  #     elsif cell.status == 1
-  #       cell.status = (alive_next_generation?(cell.x, cell.y)) ? 1 : 0
-  #     end
-  #     puts "DEBUG:: The current generation being iterated is #{current_generation}"
-  #   end
-    
-  #   # return next_generation
-  # end
 
   def display_board
     board = @cells.each_with_index.map do |row, x| 
