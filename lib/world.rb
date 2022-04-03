@@ -1,4 +1,3 @@
-#frozen_string_literal: true
 require_relative './cell.rb'
 
 class World
@@ -106,6 +105,16 @@ class World
       true
     else
       false
+    end
+  end
+
+  def begin_evolutions
+    generation_number = 0
+    15.times do
+      puts "Generation #{generation_number += 1}"
+      tick
+      pp display_board
+      sleep(1)
     end
   end
 
