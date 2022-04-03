@@ -147,14 +147,14 @@ class World_Test < MiniTest::Test
     end
   end
 
-  def test_a_new_world_following_the_rules_will_generate_when_a_tick_is_initiated
+  def test_a_new_world_creates_a_proper_new_world_when_tick_is_initiated
     world = World.new(5, 5)
     world.generate_dead_board
     world.cells[1][2].revive
     world.cells[2][2].revive
     world.cells[3][2].revive
     world.tick
-    assert_equal(@mock_blinker_world.cells, world.cells)
+    assert_equal(@mock_blinker_world.display_board, world.display_board)
   end
 
 end

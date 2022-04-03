@@ -8,17 +8,22 @@ class Cell
     @x = x
     @y = y
     @status = 0
+    #@next_status = 0
   end
 
   def alive?
    @status == 1
   end
 
+  def dead?
+    @status == 0
+  end
+
   def revive
     @status = 1
   end
 
-  def kill
+  def die
     @status = 0
   end
 
