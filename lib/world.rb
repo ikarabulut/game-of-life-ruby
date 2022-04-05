@@ -1,6 +1,6 @@
 require_relative './cell.rb'
 
-class World
+class World # rubocop:disable Metrics/ClassLength
   attr_accessor :cells, :cell_objects
 
   def initialize(rows, columns)
@@ -22,10 +22,10 @@ class World
   end
   
   def generate_random_board
-    @cells = @cells.each_with_index.map do |row, x|
+    @cells = @cells.each_with_index.map do |_row, x|
       @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y)
-        cell.status = [0, 1].sample
+        [cell.revive, cell.die].sample
         cell
       end
     end
@@ -125,14 +125,14 @@ class World
     old_world.each do |cell|
       new_cell = Cell.new(cell.x, cell.y)
       cell = get_cell(cell.x, cell.y)
-      if cell.dead?
+      if !cell.alive?
         if revive_at?(cell.x, cell.y)
-          new_cell.status = 1
+          new_cell.revive
           new_world[cell.x][cell.y] = new_cell
         end
       elsif cell.alive?
         if alive_next_generation?(cell.x, cell.y)
-          new_cell.status = 1
+          new_cell.revive
           new_world[cell.x][cell.y] = new_cell
         end
       else
