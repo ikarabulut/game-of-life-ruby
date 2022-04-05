@@ -1,34 +1,27 @@
 require_relative './world.rb'
 
 class Cell
-  attr_reader :x, :y
-  attr_accessor :status
+  attr_reader :x, :y, :alive
 
   def initialize(x, y)
     @x = x
     @y = y
-    @status = 0
-    #@next_status = 0
+    @alive = false
   end
 
   def alive?
-   @status == 1
-  end
-
-  def dead?
-    @status == 0
+    @alive
   end
 
   def revive
-    @status = 1
+    @alive = true
   end
 
   def die
-    @status = 0
+    @alive = false
   end
 
   def to_s
-    @status
+    alive? ? 1 : 0
   end
-
 end
