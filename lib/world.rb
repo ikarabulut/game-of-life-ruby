@@ -81,15 +81,8 @@ class World
   end
 
   def alive_neighbors_of(x, y)
-    alive_neighbors = []
     neighbors = neighbors_of(x, y)
-
-    neighbors.each do |neighbor|
-      if neighbor.alive?
-        alive_neighbors.push(neighbor)
-      end
-    end
-    return alive_neighbors
+    alive_neighbors = neighbors.filter { |neighbor| neighbor.alive? }
   end
   
   def alive_next_generation?(x, y)
