@@ -43,8 +43,7 @@ class World_Test < MiniTest::Test
     assert_equal(true, world.cells[1][1].alive?)
   end
 
-  #TODO:: CHANGE NAME
-  def test_that_a_dead_cell_on_a_fully_dead_board_is_set_to_alive_with_set_alive_at
+  def test_that_a_dead_cell_can_be_set_to_alive
     world = World.new(5, 5)
     world.generate_dead_board
     world.set_alive_at(1, 1)
