@@ -1,6 +1,6 @@
 require_relative './cell.rb'
 
-class World # rubocop:disable Metrics/ClassLength
+class World
   attr_accessor :cells, :cell_objects
 
   def initialize(rows, columns)
@@ -35,7 +35,7 @@ class World # rubocop:disable Metrics/ClassLength
     @cells[x][y].revive
   end
 
-  def kill(x, y)
+  def kill(x, y) 
     @cells[x][y].die
   end
 
