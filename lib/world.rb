@@ -1,7 +1,7 @@
 require_relative './cell.rb'
 
 class World
-  attr_accessor :cells, :cell_objects
+  attr_accessor :cells
 
   def initialize(rows, columns)
     @rows = rows
