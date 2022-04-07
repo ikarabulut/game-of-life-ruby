@@ -27,6 +27,12 @@ class UI_Test < Minitest::Test
     assert_equal(ui.alive_symbol, "o")
   end
 
+  def test_user_can_set_dead_cell_symbol
+    ui = UI.new(StubInputGetter.new)
+    ui.set_dead_symbol
+    assert_equal(ui.dead_symbol, "x")
+  end
+
 
 
 end
