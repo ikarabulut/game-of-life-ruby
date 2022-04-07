@@ -12,11 +12,15 @@ class UI_Test < Minitest::Test
       "x"
     end
   
-    def set_grid_size
+    def get_number_of_rows
+      10
+    end
+
+    def get_number_of_columns
       25
     end
   
-    def set_iterations_number
+    def get_iterations_number
       40
     end
   end
@@ -31,6 +35,30 @@ class UI_Test < Minitest::Test
     ui = UI.new(StubInputGetter.new)
     ui.set_dead_symbol
     assert_equal(ui.dead_symbol, "x")
+  end
+
+  def test_default_symbols_are_1_and_0
+    ui = UI.new
+    assert_equal(1, ui.alive_symbol)
+    assert_equal(0, ui.dead_symbol)
+  end
+
+  def test_user_can_select_the_number_of_rows
+    ui = UI.new(StubInputGetter.new)
+    ui.set_number_of_rows
+    assert_equal(10, ui.rows)
+  end
+
+  def test_user_can_select_the_number_of_columns
+    ui = UI.new(StubInputGetter.new)
+    ui.set_number_of_columns
+    assert_equal(25, ui.columns)
+  end
+
+  def test_the_default_number_of_rows_and_columns_is_10_and_10
+    ui = UI.new
+    assert_equal(10, ui.rows)
+    assert_equal(10, ui.columns)
   end
 
 
