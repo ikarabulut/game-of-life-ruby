@@ -26,5 +26,9 @@ class InputGetter
     gets.chomp().to_i
   end
 
+  def get_defaults_prompt_response
+    gets.chomp() == "y" ? true : false
+  end
+
 
 end
