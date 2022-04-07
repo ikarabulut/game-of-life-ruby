@@ -1,7 +1,7 @@
 require_relative './world.rb'
 
 class UI
-  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :iterations
+  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions
 
   def initialize(input_getter= InputGetter.new)
     @input_getter = input_getter
@@ -9,7 +9,7 @@ class UI
     @dead_symbol = 0
     @rows = 10
     @columns = 10
-    @iterations = "infinity"
+    @evolutions = "infinity"
   end
 
   def set_alive_symbol
@@ -28,10 +28,23 @@ class UI
     @columns = @input_getter.get_number_of_columns
   end
 
-  def set_number_of_iterations
-    @iterations = @input_getter.get_number_of_iterations
+  def set_number_of_evolutions
+    @evolutions = @input_getter.get_number_of_evolutions
   end
 
+  private
+
+  def display_welcome_message
+    "Welcome to Conways Game of Life"
+  end
+
+  def display_defaults_message
+    "The defaults for this game are: \n" +
+    "Alive/Dead cells: #{@alive_symbol}/#{@dead_symbol} \n" +
+    "Grid Size: #{@rows}/#{@columns} \n" +
+    "Evolutions: #{@evolutions}"
+  end
+  
 
 
 end

@@ -21,8 +21,8 @@ class InputGetter
     gets.chomp().to_i
   end
 
-  def get_number_of_iterations
-    puts "Please enter the number of columns:"
+  def get_number_of_evolutions
+    puts "Please enter the number of evolutions:"
     gets.chomp().to_i
   end
 
