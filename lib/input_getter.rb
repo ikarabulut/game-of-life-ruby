@@ -11,5 +11,15 @@ class InputGetter
     gets.chomp()
   end
 
+  def get_number_of_rows
+    puts "Please enter the number of rows:"
+    gets.chomp().to_i
+  end
+
+  def get_number_of_columns
+    puts "Please enter the number of columns:"
+    gets.chomp().to_i
+  end
+
 
 end
