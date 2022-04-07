@@ -1,7 +1,7 @@
 require_relative './world.rb'
 
 class UI
-  attr_reader :alive_symbol, :dead_symbol, :rows, :columns
+  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :iterations
 
   def initialize(input_getter= InputGetter.new)
     @input_getter = input_getter
@@ -9,6 +9,7 @@ class UI
     @dead_symbol = 0
     @rows = 10
     @columns = 10
+    @iterations = "infinity"
   end
 
   def set_alive_symbol
@@ -25,6 +26,10 @@ class UI
 
   def set_number_of_columns
     @columns = @input_getter.get_number_of_columns
+  end
+
+  def set_number_of_iterations
+    @iterations = @input_getter.get_number_of_iterations
   end
 
 

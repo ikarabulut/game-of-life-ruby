@@ -20,7 +20,7 @@ class UI_Test < Minitest::Test
       25
     end
   
-    def get_iterations_number
+    def get_number_of_iterations
       40
     end
   end
@@ -59,6 +59,12 @@ class UI_Test < Minitest::Test
     ui = UI.new
     assert_equal(10, ui.rows)
     assert_equal(10, ui.columns)
+  end
+
+  def test_user_can_select_the_number_of_iterations
+    ui = UI.new(StubInputGetter.new)
+    ui.set_number_of_iterations
+    assert_equal(40, ui.iterations)
   end
 
 
