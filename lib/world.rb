@@ -6,7 +6,7 @@ class World
   def initialize(rows, columns)
     @rows = rows
     @columns = columns
-    @board = Array.new(rows) { Array.new(columns) }
+    @board = generate_board
   end
 
   def generate_dead_cells
@@ -137,6 +137,12 @@ class World
         cell.to_s
       end
     end
+  end
+
+  private
+
+  def generate_board
+    Array.new(@rows) { Array.new(@columns) }
   end
 
 
