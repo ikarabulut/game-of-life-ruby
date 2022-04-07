@@ -1,4 +1,6 @@
-require_relative './program_run.rb'
+require_relative './cell.rb'
+require_relative './ui.rb'
+require_relative './input_getter.rb'
 
 #INJECT UI INTO WORLD TO GRAB SYMBOLS AND GRID SIZE
 class World
