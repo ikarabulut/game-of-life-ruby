@@ -1,8 +1,8 @@
-require_relative './world.rb'
-require_relative './input_getter.rb'
+require_relative 'input_getter'
+require_relative 'prompts'
 
 class GameSettings
-  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions, :defaults
+  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions, :defaults, :game_settings
 
   def initialize(input_getter= InputGetter.new)
     @input_getter = input_getter
@@ -12,15 +12,15 @@ class GameSettings
     @columns = 10
     @evolutions = "infinity"
     @defaults = true
+    @game_settings = {rows: @rows, columns: @columns, alive_symbol: @alive_symbol, dead_symbol: @dead_symbol, evolutions: @evolutions}
+    @prompts = Prompts.new(@game_settings)
   end
 
-  def display_messages
-    puts display_welcome_message
-    puts display_defaults_message
-    puts display_defaults_prompt
+  def settings_prompt
+    @prompts.print_messages
     set_defaults_prompt
-    set_defaults if !defaults?
-    puts display_updated_settings if !defaults?
+    set_game_settings if !defaults?
+    @prompts.print_updated_settings if !defaults?
   end
 
   def set_game_settings
@@ -61,29 +61,4 @@ class GameSettings
     @defaults
   end
 
-  def display_welcome_message
-    "Welcome to Conways Game of Life!"
-  end
-
-  def display_defaults_message
-    "The defaults for this game are: \n" +
-    "Alive cell: #{@alive_symbol} \n" +
-    "Dead cell: #{@dead_symbol} \n" +
-    "Grid Size: #{@rows}/#{@columns} \n" +
-    "Evolutions: #{@evolutions}"
-  end
-
-  def display_updated_settings
-    "Your updated game settings are: \n" +
-    "Alive cell: #{@alive_symbol} \n" +
-    "Dead cell: #{@dead_symbol} \n" +
-    "Grid Size: #{@rows}/#{@columns} \n" +
-    "Evolutions: #{@evolutions}"
-  end
-
-  def display_defaults_prompt
-    "Would you like to play with the defaults? (y/n)"
-  end
-
-  
 end
