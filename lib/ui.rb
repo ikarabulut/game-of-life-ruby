@@ -12,7 +12,6 @@ class UI
     @columns = 10
     @evolutions = "infinity"
     @defaults = true
-    display_messages
   end
 
   def display_messages
@@ -30,6 +29,30 @@ class UI
     set_number_of_rows
     set_number_of_columns
     set_number_of_evolutions
+  end
+
+  def set_alive_symbol
+    @alive_symbol = @input_getter.get_alive_symbol
+  end
+
+  def set_dead_symbol
+    @dead_symbol = @input_getter.get_dead_symbol
+  end
+
+  def set_number_of_rows
+    @rows = @input_getter.get_number_of_rows
+  end
+
+  def set_number_of_columns
+    @columns = @input_getter.get_number_of_columns
+  end
+
+  def set_number_of_evolutions
+    @evolutions = @input_getter.get_number_of_evolutions
+  end
+
+  def set_defaults_prompt
+    @defaults = @input_getter.get_defaults_prompt_response
   end
 
   private
@@ -62,28 +85,5 @@ class UI
     "Would you like to play with the defaults? (y/n)"
   end
 
-  def set_alive_symbol
-    @alive_symbol = @input_getter.get_alive_symbol
-  end
-
-  def set_dead_symbol
-    @dead_symbol = @input_getter.get_dead_symbol
-  end
-
-  def set_number_of_rows
-    @rows = @input_getter.get_number_of_rows
-  end
-
-  def set_number_of_columns
-    @columns = @input_getter.get_number_of_columns
-  end
-
-  def set_number_of_evolutions
-    @evolutions = @input_getter.get_number_of_evolutions
-  end
-
-  def set_defaults_prompt
-    @defaults = @input_getter.get_defaults_prompt_response
-  end
   
 end
