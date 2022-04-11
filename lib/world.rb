@@ -13,7 +13,7 @@ class World
   def generate_dead_cells
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
-        cell = Cell.new(x, y)
+        cell = Cell.new(x, y, false)
       end
     end
   end
@@ -21,9 +21,7 @@ class World
   def generate_random_cells
     @cells = @cells.each_with_index.map do |row, x|
       @cells[x].each_with_index.map do |cell, y|
-        cell = Cell.new(x, y)
-        [cell.revive, cell.die].sample
-        cell
+        cell = Cell.new(x, y, [true, false].sample)
       end
     end
   end
@@ -78,11 +76,11 @@ class World
     old_world = @cells.flatten
     new_world = @display.generate_board
     old_world.each do |cell|
-      new_cell = Cell.new(cell.x, cell.y)
-      # cell = old_world[cell.x][cell.y]
       if alive_next_generation?(cell.x, cell.y)
-        new_cell.revive
+        new_cell = Cell.new(cell.x, cell.y, true)
         new_world[cell.x][cell.y] = new_cell
+      else
+        new_cell = Cell.new(cell.x, cell.y, false)
       end
       new_world[cell.x][cell.y] = new_cell
     end
