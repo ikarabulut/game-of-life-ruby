@@ -8,15 +8,15 @@ class Board
     @board = generate_board
   end
 
-  def generate_board
-    Array.new(@game_settings.rows) { Array.new(@game_settings.columns) }
-  end
-
   def print_board
     pp display_board
   end
 
   private
+
+  def generate_board
+    Array.new(@game_settings.rows) { Array.new(@game_settings.columns) }
+  end
 
   def display_board
     @board.each_with_index.map do |row, x| 
