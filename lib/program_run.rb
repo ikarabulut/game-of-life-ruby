@@ -10,7 +10,7 @@ def start_game
 
   world = game.create_world(board)
   world.generate_random_cells
-  p world.cells
+  world.begin_evolutions
 end
 
 start_game
