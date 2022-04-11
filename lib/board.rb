@@ -14,17 +14,18 @@ class Display
   end
 
   def print_board(world)
-    pp display_board
+    pp display_board(world)
   end
 
   private
 
   def display_board(world)
-    world.each_with_index.map do |row, x| 
+    board = world.each_with_index.map do |row, x| 
       world[x].each_with_index.map do |cell, y|
         cell.alive? ? @game_settings.alive_symbol : @game_settings.dead_symbol
       end
     end
+    board = board.map {|row| row.join(', ')} 
   end
 
 
