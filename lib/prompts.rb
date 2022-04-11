@@ -5,12 +5,12 @@ class Prompts
   end
 
   def print_messages
-    puts display_welcome_message + display_defaults_message + display_defaults_prompt
+    puts display_welcome_message + '\n' + display_defaults_message + '\n' + display_defaults_prompt
   end
 
-  def print_updated_settings
-    puts display_updated_settings
-  end
+  # def print_updated_settings(updated_settings)
+  #   puts display_updated_settings(updated_settings)
+  # end
 
   private
 
@@ -26,13 +26,12 @@ class Prompts
     "Evolutions: #{@game_settings[:evolutions]}"
   end
 
-  # TODO:: THIS DOESNT UPDATE TO THE NEW SETTINGS
-  # def display_updated_settings 
+  # def display_updated_settings(updated_settings)
   #   "Your updated game settings are: \n" +
-  #   "Alive cell: #{@game_settings[:alive_symbol]} \n" +
-  #   "Dead cell: #{@game_settings[:dead_symbol]} \n" +
-  #   "Grid Size: #{@game_settings[:rows]} X #{@game_settings[:columns]} \n" +
-  #   "Evolutions: #{@game_settings[:evolutions]}"
+  #   "Alive cell: #{updated_settings[:alive_symbol]} \n" +
+  #   "Dead cell: #{updated_settings[:dead_symbol]} \n" +
+  #   "Grid Size: #{updated_settings[:rows]} X #{updated_settings[:columns]} \n" +
+  #   "Evolutions: #{updated_settings[:evolutions]}"
   # end
 
   def display_defaults_prompt
