@@ -19,7 +19,4 @@ class Cell
     @alive = false
   end
 
-  # def to_s #TODO:: REMOVE THIS - Settings now in Board.rb Display
-  #   alive? ? 1 : 0
-  # end
 end
