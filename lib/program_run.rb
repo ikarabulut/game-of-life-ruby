@@ -6,9 +6,9 @@ def start_game
   settings = game.get_settings
   settings.settings_prompt
 
-  board = game.get_board(settings)
+  display = game.get_display(settings)
 
-  world = game.create_world(board)
+  world = game.create_world(display)
   world.generate_random_cells
   world.begin_evolutions
 end
