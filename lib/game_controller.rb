@@ -13,7 +13,7 @@ class GameController
     GameSettings.new(@input_getter)
   end
 
-  def get_board(settings)
+  def get_display(settings)
     Display.new(settings)
   end
 
