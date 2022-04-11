@@ -4,7 +4,7 @@ require_relative 'prompts'
 class GameSettings
   attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions, :defaults, :game_settings
 
-  def initialize(input_getter= InputGetter.new)
+  def initialize(input_getter)
     @input_getter = input_getter
     @alive_symbol = 1
     @dead_symbol = 0
@@ -20,7 +20,6 @@ class GameSettings
     @prompts.print_messages
     set_defaults_prompt
     set_game_settings if !defaults?
-    @prompts.print_updated_settings if !defaults?
   end
 
   def set_game_settings

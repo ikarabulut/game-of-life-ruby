@@ -1,5 +1,3 @@
-require_relative './world.rb'
-
 class Cell
   attr_reader :x, :y, :alive
 
@@ -21,7 +19,7 @@ class Cell
     @alive = false
   end
 
-  def to_s #TODO:: REMOVE THIS - Settings now in Board.rb Display
-    alive? ? 1 : 0
-  end
+  # def to_s #TODO:: REMOVE THIS - Settings now in Board.rb Display
+  #   alive? ? 1 : 0
+  # end
 end

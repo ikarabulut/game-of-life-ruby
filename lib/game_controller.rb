@@ -1,19 +1,25 @@
 require_relative 'game_settings'
 require_relative 'world'
 require_relative 'board'
+require_relative 'cell'
 
 class GameController
 
   def initialize
-    @game_settings = GameSettings.new
-    @board = Board.new(@game_settings)
-    @world = World.new(@board)
+    @input_getter = InputGetter.new
   end
 
-  def start
-    @game_settings.settings_prompt
-    @world.generate_random_cells
-    @world.begin_evolutions
+  def get_settings
+    GameSettings.new(@input_getter)
   end
+
+  def get_board(settings)
+    Display.new(settings)
+  end
+
+  def create_world(display)
+    World.new(display)
+  end
+
 
 end

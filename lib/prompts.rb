@@ -5,7 +5,7 @@ class Prompts
   end
 
   def print_messages
-    puts display_welcome_message + '\n' + display_defaults_message + '\n' + display_defaults_prompt
+    puts display_welcome_message + "\n" + display_defaults_message + "\n" + display_defaults_prompt
   end
 
   # def print_updated_settings(updated_settings)

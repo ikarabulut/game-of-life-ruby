@@ -2,22 +2,25 @@ require_relative 'cell'
 require_relative 'board'
 
 class World
+  attr_reader :display, :cells, :settings
 
-  def initialize(board)
-    @board = board
+  def initialize(display)
+    @display = display
+    @cells = display.board
+    @settings = display.game_settings
   end
 
   def generate_dead_cells
-    @board.board = @board.board.each_with_index.map do |row, x|
-      @board.board[x].each_with_index.map do |cell, y|
+    @cells = @cells.each_with_index.map do |row, x|
+      @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y)
       end
     end
   end
   
   def generate_random_cells
-    @board.board = @board.board.each_with_index.map do |_row, x|
-      @board.board[x].each_with_index.map do |cell, y|
+    @cells = @cells.each_with_index.map do |row, x|
+      @cells[x].each_with_index.map do |cell, y|
         cell = Cell.new(x, y)
         [cell.revive, cell.die].sample
         cell
@@ -73,7 +76,7 @@ class World
 
   def tick
     old_world = @cells.flatten
-    new_world = generate_board
+    new_world = @display.generate_board
     old_world.each do |cell|
       new_cell = Cell.new(cell.x, cell.y)
       cell = old_world[cell.x][cell.y]
@@ -88,12 +91,22 @@ class World
 
   def begin_evolutions
     generation_number = 0
-    @game_settings.evolutions.times do
-      system "clear"
-      puts "Generation #{generation_number += 1}"
-      tick
-      @board.print_board
-      sleep(1)
+    if @settings.evolutions == "infinity"
+      while true
+        system "clear"
+        puts "Generation #{generation_number += 1}"
+        tick
+        @display.print_board
+        sleep(1)
+      end
+    else
+      @settings.evolutions.times do
+        system "clear"
+        puts "Generation #{generation_number += 1}"
+        tick
+        @display.print_board
+        sleep(1)
+      end
     end
   end
 
