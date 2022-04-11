@@ -1,5 +1,5 @@
 class Prompts
-
+  #TODO:: UPDATE TO JUST SAY SETTINGS
   def initialize(game_settings)
     @game_settings = game_settings
   end

@@ -3,7 +3,7 @@ require_relative 'board'
 
 class World
 
-  def initialize(board= Board.new)
+  def initialize(board)
     @board = board
   end
 

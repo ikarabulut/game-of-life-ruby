@@ -3,7 +3,7 @@ require_relative 'game_settings'
 class Board
   attr_reader :board
 
-  def initialize(game_settings= GameSettings.new)
+  def initialize(game_settings)
     @game_settings = game_settings
     @board = generate_board
   end
