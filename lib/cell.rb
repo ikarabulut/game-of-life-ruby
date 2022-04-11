@@ -1,10 +1,10 @@
 class Cell
   attr_reader :x, :y, :alive
 
-  def initialize(x, y)
+  def initialize(x, y, alive)
     @x = x
     @y = y
-    @alive = false
+    @alive = alive
   end
 
   def alive?
