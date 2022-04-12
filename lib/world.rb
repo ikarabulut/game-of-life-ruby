@@ -1,5 +1,5 @@
 require_relative 'cell'
-require_relative 'board'
+require_relative 'display'
 
 class World
   attr_reader :display, :cells, :settings

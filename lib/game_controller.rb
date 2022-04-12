@@ -1,6 +1,6 @@
 require_relative 'game_settings'
 require_relative 'world'
-require_relative 'board'
+require_relative 'display'
 require_relative 'cell'
 
 class GameController
