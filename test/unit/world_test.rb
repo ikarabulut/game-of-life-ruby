@@ -1,35 +1,6 @@
 require 'minitest/autorun'
 require_relative '../../lib/world.rb'
 
-class FakeGameSettings
-  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions, :defaults, :game_settings
-
-  def initialize
-    @alive_symbol = 1
-    @dead_symbol = 0
-    @rows = 10
-    @columns = 10
-    @evolutions = "infinity"
-    @defaults = true
-    @game_settings = {rows: @rows, columns: @columns, alive_symbol: @alive_symbol, dead_symbol: @dead_symbol, evolutions: @evolutions}
-  end
-
-end
-
-class FakeDisplay
-  attr_reader :board, :game_settings
-
-  def initialize(game_settings= FakeGameSettings.new)
-    @game_settings = game_settings
-    @board = generate_board
-  end
-
-  def generate_board
-    Array.new(@game_settings.rows) { Array.new(@game_settings.columns) }
-  end
-
-end
-
 class WorldTest < MiniTest::Test
 
   def test_that_an_alive_cell_with_2_alive_neighbors_stays_alive
@@ -87,9 +58,33 @@ class WorldTest < MiniTest::Test
     refute(world.alive_next_generation?(3, 6), "A dead cell without exactly 3 alive neighbors revived when it should have stayed dead")
   end
 
+end
 
+class FakeGameSettings
+  attr_reader :alive_symbol, :dead_symbol, :rows, :columns, :evolutions, :defaults, :game_settings
 
+  def initialize
+    @alive_symbol = 1
+    @dead_symbol = 0
+    @rows = 10
+    @columns = 10
+    @evolutions = "infinity"
+    @defaults = true
+    @game_settings = {rows: @rows, columns: @columns, alive_symbol: @alive_symbol, dead_symbol: @dead_symbol, evolutions: @evolutions}
+  end
 
+end
 
+class FakeDisplay
+  attr_reader :board, :game_settings
+
+  def initialize(game_settings= FakeGameSettings.new)
+    @game_settings = game_settings
+    @board = generate_board
+  end
+
+  def generate_board
+    Array.new(@game_settings.rows) { Array.new(@game_settings.columns) }
+  end
 
 end
