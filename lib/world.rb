@@ -69,7 +69,7 @@ class World
   end
   
   def alive_next_generation?(x, y)
-    (@cells[x][y].alive? && alive_neighbors_of(x, y).length == 2) || alive_neighbors_of(x, y).length == 2
+    (@cells[x][y].alive? && alive_neighbors_of(x, y).length == 2) || alive_neighbors_of(x, y).length == 3
   end
 
   def tick
