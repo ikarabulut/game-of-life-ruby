@@ -41,6 +41,22 @@ class WorldTest < MiniTest::Test
     assert_equal(display_board(@mock_blinker_world.cells), display_board(world.cells))
   end
 
+  class DisplaySingleEvolution < MiniTest::Test
+
+    def test_it_clears_the_screen
+      system_interaction_mock = MiniTest::Mock.new
+      fake_display = FakeDisplay.new
+      world = World.new(fake_display, system_interaction_mock)
+
+      system_interaction_mock.expect :clear, nil
+      
+      world.display_single_evolution
+      system_interaction_mock.verify
+    end
+    
+
+  end
+
   class NeighborsTestSuite < MiniTest::Test
 
     def test_a_cell_has_8_neighbors
