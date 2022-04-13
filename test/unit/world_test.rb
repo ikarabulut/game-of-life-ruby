@@ -47,9 +47,16 @@ class WorldTest < MiniTest::Test
       refute_includes(world.neighbors_of(4, 4), nil)
       assert_equal(world.cells[0][0], world.neighbors_of(9, 9)[3])
     end
+
+    def test_alive_neighbors_of_will_only_return_alive_neighbors
+      world = World.new(FakeDisplay.new)
+      world.generate_random_cells
+      alive_neighbors = world.alive_neighbors_of(1, 1)
+      alive_neighbors.each do |neighbor|
+        assert_equal(true, neighbor.alive?)
+      end
+    end
   
-
-
   end
 
   class RulesTestSuite < WorldTest
