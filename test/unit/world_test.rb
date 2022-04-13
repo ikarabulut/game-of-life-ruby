@@ -10,6 +10,12 @@ class WorldTest < MiniTest::Test
     world.cells.flatten.each { |cell| refute(cell.alive?) }
   end
 
+  def test_that_generate_random_cells_fills_the_board_with_dead_and_alive_cells
+    world = World.new(FakeDisplay.new)
+    world.generate_random_cells
+    refute(nil, world.cells)
+    world.cells.flatten.each { |cell| assert(cell.alive? || !cell.alive?) }
+  end
 
   class RulesTestSuite < WorldTest
 
