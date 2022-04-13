@@ -3,6 +3,20 @@ require_relative '../../lib/world.rb'
 
 class WorldTest < MiniTest::Test
 
+  def setup
+    @mock_blinker_world = World.new(FakeDisplay.new)
+    @mock_blinker_world.generate_dead_cells
+    @mock_blinker_world.cells[2][1].revive
+    @mock_blinker_world.cells[2][2].revive
+    @mock_blinker_world.cells[2][3].revive
+  end
+
+  def display_board(cells)
+    cells.flatten.map do |cell|
+      cell.alive? ? 1 : 0
+    end
+  end
+
   def test_that_generate_dead_cells_fills_the_board_with_all_dead_cells
     world = World.new(FakeDisplay.new)
     world.generate_dead_cells
@@ -17,7 +31,17 @@ class WorldTest < MiniTest::Test
     world.cells.flatten.each { |cell| assert(cell.alive? || !cell.alive?) }
   end
 
-  class NeighborsTestSuite < WorldTest
+  def test_a_vertical_blicker_will_return_a_horizontal_blinker_when_tick_is_initiated
+    world = World.new(FakeDisplay.new)
+    world.generate_dead_cells
+    world.cells[1][2].revive
+    world.cells[2][2].revive
+    world.cells[3][2].revive
+    world.tick
+    assert_equal(display_board(@mock_blinker_world.cells), display_board(world.cells))
+  end
+
+  class NeighborsTestSuite < MiniTest::Test
 
     def test_a_cell_has_8_neighbors
       world = World.new(FakeDisplay.new)
@@ -59,7 +83,7 @@ class WorldTest < MiniTest::Test
   
   end
 
-  class RulesTestSuite < WorldTest
+  class RulesTestSuite < MiniTest::Test
 
     def test_that_an_alive_cell_with_2_alive_neighbors_stays_alive
       world = World.new(FakeDisplay.new)
