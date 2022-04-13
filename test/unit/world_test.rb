@@ -17,6 +17,20 @@ class WorldTest < MiniTest::Test
     world.cells.flatten.each { |cell| assert(cell.alive? || !cell.alive?) }
   end
 
+  class NeighborsTestSuite < WorldTest
+
+    def test_a_cell_has_8_neighbors
+      world = World.new(FakeDisplay.new)
+      world.generate_dead_cells
+      neighbors = world.neighbors_of(1, 1)
+      assert_equal(neighbors.length, 8)
+      refute_includes(neighbors, nil)
+    end
+  
+
+
+  end
+
   class RulesTestSuite < WorldTest
 
     def test_that_an_alive_cell_with_2_alive_neighbors_stays_alive
