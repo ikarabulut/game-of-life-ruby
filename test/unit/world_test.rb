@@ -40,6 +40,13 @@ class WorldTest < MiniTest::Test
       refute_includes(world.neighbors_of(0, 4), nil)
       assert_equal(world.cells[0][1], world.neighbors_of(9, 1)[2])
     end
+
+    def test_neighbor_to_the_bottom_right_of_cell_on_the_bottom_right_edge_will_wrap_to_the_top_left_edge
+      world = World.new(FakeDisplay.new)
+      world.generate_random_cells
+      refute_includes(world.neighbors_of(4, 4), nil)
+      assert_equal(world.cells[0][0], world.neighbors_of(9, 9)[3])
+    end
   
 
 
