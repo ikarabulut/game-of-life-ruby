@@ -10,6 +10,13 @@ class GameSettingsTest < MiniTest::Test
     assert_equal("o", game_settings.alive_symbol)
   end
 
+  def test_that_the_dead_symbol_can_be_updated
+    fake_input_getter = FakeInputGetter.new
+    game_settings = GameSettings.new(fake_input_getter)
+    game_settings.set_dead_symbol
+    assert_equal("x", game_settings.dead_symbol)
+  end
+
 
 
 
