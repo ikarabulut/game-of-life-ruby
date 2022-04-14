@@ -3,7 +3,7 @@ require_relative "../../lib/game_settings.rb"
 
 class GameSettingsTest < MiniTest::Test
 
-  def test_that_the_alive_symbol_is_updated_when_set
+  def test_that_the_alive_symbol_can_be_updated
     fake_input_getter = FakeInputGetter.new
     game_settings = GameSettings.new(fake_input_getter)
     game_settings.set_alive_symbol
