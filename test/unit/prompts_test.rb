@@ -7,13 +7,16 @@ class PromptsTest < MiniTest::Test
     fake_game_settings = FakeGameSettings.new.game_settings
     prompts = Prompts.new(fake_game_settings)
 
-    expected = "Welcome to Conways Game of Life!" + "\n" + "The defaults for this game are: \n" +
-    "Alive cell: 1 \n" +
-    "Dead cell: 0 \n" +
-    "Grid Size: 10 X 10 \n" +
-    "Evolutions: infinity" + "\n" +
-    "Would you like to play with the defaults? (y/n)
-"
+    expected = <<~PROMPT
+      Welcome to Conways Game of Life!
+      The defaults for this game are:
+      Alive cell: 1
+      Dead cell: 0
+      Grid Size: 10 X 10
+      Evolutions: infinity
+      Would you like to play with the defaults? (y/n)
+      PROMPT
+    
     assert_output(expected) { prompts.print_messages }
   end
 
