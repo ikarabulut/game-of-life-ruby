@@ -19,10 +19,10 @@ class Prompts
   end
 
   def display_defaults_message
-    "The defaults for this game are: \n" +
-    "Alive cell: #{@game_settings[:alive_symbol]} \n" +
-    "Dead cell: #{@game_settings[:dead_symbol]} \n" +
-    "Grid Size: #{@game_settings[:rows]} X #{@game_settings[:columns]} \n" +
+    "The defaults for this game are:\n" +
+    "Alive cell: #{@game_settings[:alive_symbol]}\n" +
+    "Dead cell: #{@game_settings[:dead_symbol]}\n" +
+    "Grid Size: #{@game_settings[:rows]} X #{@game_settings[:columns]}\n" +
     "Evolutions: #{@game_settings[:evolutions]}"
   end
 
