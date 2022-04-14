@@ -17,6 +17,21 @@ class DisplayTest < MiniTest::Test
     assert_equal(expected, display.board)
   end
 
+  def test_that_print_board_will_print_the_board_to_the_terminal
+    # fake_game_settings = FakeGameSettings.new
+    # display = Display.new(fake_game_settings)
+    # fake_world_generation = Array.new(display.game_settings.rows) { Array.new(display.game_settings.columns) { Cell.new(1, 1, false) } }
+    # expected = 
+    # "[\"0, 0, 0, 0, 0\",
+    #   \"0, 0, 0, 0, 0\",
+    #   \"0, 0, 0, 0, 0\",
+    #   \"0, 0, 0, 0, 0\",
+    #   \"0, 0, 0, 0, 0\"]
+    # "
+    # assert_output(expected) { display.print_board(fake_world_generation) }
+  end
+
+
 
 
 end
@@ -32,3 +47,4 @@ class FakeGameSettings
   end
 
 end
+
