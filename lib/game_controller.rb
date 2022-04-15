@@ -4,6 +4,7 @@ require_relative 'display'
 require_relative 'cell'
 
 class GameController
+  attr_reader :input_getter
 
   def initialize
     @input_getter = InputGetter.new
@@ -18,7 +19,7 @@ class GameController
   end
 
   def create_world(display)
-    World.new(display)
+    World.new(display, SystemInteraction.new)
   end
 
 

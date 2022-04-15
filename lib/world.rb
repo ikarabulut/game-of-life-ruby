@@ -2,12 +2,13 @@ require_relative 'cell'
 require_relative 'display'
 
 class World
-  attr_reader :display, :cells, :settings
+  attr_reader :display, :cells, :settings, :system_interaction
 
-  def initialize(display)
+  def initialize(display, system_interaction)
     @display = display
     @cells = display.board
     @settings = display.game_settings
+    @system_interaction = system_interaction
   end
 
   def generate_dead_cells
@@ -99,6 +100,7 @@ class World
       end
     else
       @settings.evolutions.times do
+        # SystemInteraction.clear
         system "clear"
         puts "Generation #{generation_number += 1}"
         tick
@@ -108,5 +110,21 @@ class World
     end
   end
 
+  def display_single_evolution
+    @system_interaction.clear
+  end
 end
 
+class SystemInteraction
+  def clear
+    system "clear"
+  end
+
+  def print(message)
+    puts message
+  end
+
+  def sleep(time_in_s)
+    sleep time_in_s
+  end
+end
