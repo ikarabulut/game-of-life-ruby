@@ -13,5 +13,13 @@ class GameControllerTest < Minitest::Test
     assert_instance_of(Display, game_controller.get_display(game_controller.get_settings))
   end
 
+  def test_that_World_is_instantiated_when_create_world_is_called
+    game_controller = GameController.new
+    game_settings = GameSettings.new(game_controller.input_getter)
+    display = Display.new(game_settings)
+    assert_instance_of(World, game_controller.create_world(display))
+  end
+
+
 
 end
