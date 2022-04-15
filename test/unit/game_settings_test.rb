@@ -51,13 +51,10 @@ class GameSettingsTest < MiniTest::Test
     fake_input_getter = FakeInputGetter.new(input)
     game_settings = GameSettings.new(fake_input_getter)
 
-    settings_prompt_mock = MiniTest::Mock.new
-    settings_prompt_mock.expect :call, true
-
-    game_settings.stub :set_game_settings, settings_prompt_mock do
-      game_settings.settings_prompt
+    game_settings.stub(:set_game_settings, -> { raise "set_game_settings was not called!" }) do
+      assert_raises { game_settings.settings_prompt } 
     end
-    assert(settings_prompt_mock.verify)
+
   end
 
   def test_that_set_game_settings_is_NOT_called_if_defaults_are_true
