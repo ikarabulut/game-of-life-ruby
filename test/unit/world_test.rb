@@ -4,7 +4,8 @@ require_relative '../../lib/world.rb'
 class WorldTest < MiniTest::Test
 
   def setup
-    @mock_blinker_world = World.new(FakeDisplay.new)
+    system_interaction_mock = MiniTest::Mock.new
+    @mock_blinker_world = World.new(FakeDisplay.new,system_interaction_mock )
     @mock_blinker_world.generate_dead_cells
     @mock_blinker_world.cells[2][1].revive
     @mock_blinker_world.cells[2][2].revive
@@ -18,21 +19,24 @@ class WorldTest < MiniTest::Test
   end
 
   def test_that_generate_dead_cells_fills_the_board_with_all_dead_cells
-    world = World.new(FakeDisplay.new)
+    system_interaction_mock = MiniTest::Mock.new
+    world = World.new(FakeDisplay.new, system_interaction_mock)
     world.generate_dead_cells
     refute(nil, world.cells)
     world.cells.flatten.each { |cell| refute(cell.alive?) }
   end
 
   def test_that_generate_random_cells_fills_the_board_with_dead_and_alive_cells
-    world = World.new(FakeDisplay.new)
+    system_interaction_mock = MiniTest::Mock.new
+    world = World.new(FakeDisplay.new, system_interaction_mock)
     world.generate_random_cells
     refute(nil, world.cells)
     world.cells.flatten.each { |cell| assert(cell.alive? || !cell.alive?) }
   end
 
   def test_a_vertical_blicker_will_return_a_horizontal_blinker_when_tick_is_initiated
-    world = World.new(FakeDisplay.new)
+    system_interaction_mock = MiniTest::Mock.new
+    world = World.new(FakeDisplay.new, system_interaction_mock)
     world.generate_dead_cells
     world.cells[1][2].revive
     world.cells[2][2].revive
@@ -60,7 +64,8 @@ class WorldTest < MiniTest::Test
   class NeighborsTestSuite < MiniTest::Test
 
     def test_a_cell_has_8_neighbors
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       neighbors = world.neighbors_of(1, 1)
       assert_equal(neighbors.length, 8)
@@ -68,28 +73,32 @@ class WorldTest < MiniTest::Test
     end
 
     def test_neighbor_to_the_right_of_a_cell_on_the_right_edge_wraps_to_the_left
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_random_cells
       refute_includes(world.neighbors_of(0, 4), nil)
       assert_equal(world.cells[0][0], world.neighbors_of(0, 9)[1])
     end
 
     def test_neighbor_to_the_bottom_of_cell_on_the_bottom_of_the_world_will_wrap_to_the_top
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_random_cells
       refute_includes(world.neighbors_of(0, 4), nil)
       assert_equal(world.cells[0][1], world.neighbors_of(9, 1)[2])
     end
 
     def test_neighbor_to_the_bottom_right_of_cell_on_the_bottom_right_edge_will_wrap_to_the_top_left_edge
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_random_cells
       refute_includes(world.neighbors_of(4, 4), nil)
       assert_equal(world.cells[0][0], world.neighbors_of(9, 9)[3])
     end
 
     def test_alive_neighbors_of_will_only_return_alive_neighbors
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_random_cells
       alive_neighbors = world.alive_neighbors_of(1, 1)
       alive_neighbors.each do |neighbor|
@@ -102,7 +111,8 @@ class WorldTest < MiniTest::Test
   class RulesTestSuite < MiniTest::Test
 
     def test_that_an_alive_cell_with_2_alive_neighbors_stays_alive
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[2][5].revive
       world.cells[2][6].revive
@@ -111,7 +121,8 @@ class WorldTest < MiniTest::Test
     end
 
     def test_that_an_alive_cell_with_3_alive_neighbors_stays_alive
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[1][5].revive
       world.cells[2][4].revive
@@ -122,7 +133,8 @@ class WorldTest < MiniTest::Test
     end
 
     def test_that_an_alive_cell_with_more_than_3_alive_neighbors_does_not_survive
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[1][5].revive
       world.cells[2][4].revive
@@ -133,14 +145,16 @@ class WorldTest < MiniTest::Test
     end
 
     def test_that_an_alive_cell_with_less_than_2_alive_neighbors_does_not_survive
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[2][5].revive
       refute(world.alive_next_generation?(2, 5), "An alive cell with less than 2 alive neighbors survived when it should have died")
     end
 
     def test_that_a_dead_cell_with_exactly_3_alive_neighbors_will_come_to_life
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[2][5].revive
       world.cells[2][6].revive
@@ -149,7 +163,8 @@ class WorldTest < MiniTest::Test
     end
 
     def test_that_a_dead_cell_without_exactly_3_alive_neighbors_stays_dead
-      world = World.new(FakeDisplay.new)
+      system_interaction_mock = MiniTest::Mock.new
+      world = World.new(FakeDisplay.new, system_interaction_mock)
       world.generate_dead_cells
       world.cells[2][5].revive
       world.cells[2][6].revive
