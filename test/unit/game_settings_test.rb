@@ -39,14 +39,16 @@ class GameSettingsTest < MiniTest::Test
   end
 
   def test_that_defaults_can_be_set_to_false
-    fake_input_getter = FakeInputGetter.new
+    input = StringIO.new("n")
+    fake_input_getter = FakeInputGetter.new(input)
     game_settings = GameSettings.new(fake_input_getter)
     game_settings.set_defaults_prompt
     assert_equal(false, game_settings.defaults)
   end
 
   def test_that_set_game_settings_is_called_if_defaults_are_false
-    fake_input_getter = FakeInputGetter.new
+    input = StringIO.new("n")
+    fake_input_getter = FakeInputGetter.new(input)
     game_settings = GameSettings.new(fake_input_getter)
 
     settings_prompt_mock = MiniTest::Mock.new
@@ -58,11 +60,28 @@ class GameSettingsTest < MiniTest::Test
     assert(settings_prompt_mock.verify)
   end
 
+  def test_that_set_game_settings_is_NOT_called_if_defaults_are_true
+    input = StringIO.new("y")
+    fake_input_getter = FakeInputGetter.new(input)
+    game_settings = GameSettings.new(fake_input_getter)
+
+    settings_prompt_mock = MiniTest::Mock.new
+    
+    assert_raises(settings_prompt_mock.expect :call, true)
+    game_settings.stub :set_game_settings, settings_prompt_mock do
+      game_settings.settings_prompt
+    end
+  end
+
 
 
 end
 
 class FakeInputGetter
+  def initialize(input = $stdin)
+    @input = input
+  end
+
   def get_alive_symbol
    "o"
   end
@@ -84,6 +103,6 @@ class FakeInputGetter
   end
 
   def get_defaults_prompt_response
-    false
+    @input.gets.chomp() == "y" ? true : false
   end
 end
