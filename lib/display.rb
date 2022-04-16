@@ -14,18 +14,30 @@ class Display
   end
 
   def print_board(world)
-    pp display_board(world)
+    puts display_board(world)
   end
 
   private
 
   def display_board(world)
-    board = world.each_with_index.map do |row, x| 
-      world[x].each_with_index.map do |cell, y|
-        cell.alive? ? @game_settings.alive_symbol : @game_settings.dead_symbol
+    board = ''
+    x = 0
+    @game_settings.rows.times do
+      y = 0
+      board += "\n"
+      # board += line
+      board += "\n"
+      @game_settings.columns.times do
+        cell = world[x][y]
+        cell = cell.alive? ? @game_settings.alive_symbol : @game_settings.dead_symbol
+        board += " #{cell} "
+        y += 1
       end
+      x += 1
     end
-    board = board.map {|row| row.join(', ')} 
+    board += "\n"
+
+    return board
   end
 
 
