@@ -37,6 +37,18 @@ Each evolution will run through these above rules and will determine the state o
 - Follow the prompts
 - If you run infinity loops you need to enter `ctrl + c` to quit
 
+<b> Cool Features </b>
+
+- Try it with emojis!
+
 ### To run all tests
 
 - run `bin/test`
+
+### TODO's
+
+- 🔴 Add User validation
+  - If user enters something other than y/n, a string instead of integer for # of evolutions, etc.
+- 🔴 Set max board size entry
+  - Currently a user can make a board i.e. 30x30 which is too large for their terminal
+- 🔴 Allow user to enter infinity evolutions if they are not choosing defaults
